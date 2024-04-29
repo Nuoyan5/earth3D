@@ -17,6 +17,11 @@ let renderer: any;
 let control: any;
 let css2dRender: any;
 
+const ele: any = document.getElementById("ele");
+renderer = new THREE.WebGLRenderer();
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.shadowMap.enabled = true;
+
 const init = () => {
   const ele: any = document.getElementById("ele");
   renderer = new THREE.WebGLRenderer();
@@ -165,13 +170,35 @@ const initFloor = () => {
 
 let cubeEarth: any;
 const initEarth = () => {
+  //光
+  const light1 = new THREE.DirectionalLight(0x55b1ac, 8);
+  light1.castShadow = true;
+  light1.position.set(-400, 400, -50);
+  scene.add(light1);
+
   // 地球
   const earth = new THREE.SphereGeometry(50, 64, 32);
+  // const earthMaterial = new THREE.ShaderMaterial();
+  //   material = new THREE.MeshBasicMaterial({
+  //     map: transparentTexture, // 设置纹理
+  //     transparent: true,       // 定义材质为透明
+  //     opacity: 0.5             // 设置材质的透明度，0.0 完全透明, 1.0 完全不透明
+  // })
+  // const earthMaterial = new THREE.MeshBasicMaterial({
+  //   transparent: true, // 定义材质为透明
+  //   opacity: 0.5, // 设置材质的透明度，0.0 完全透明, 1.0 完全不透明
+  // });
   const earthMaterial = new THREE.MeshPhongMaterial();
   earthMaterial.map = new THREE.TextureLoader().load(
-    require("@/assets/earth.jpg")
+    require("@/assets/earth1.jpg")
   );
+  // earthMaterial.color.set(0xff0000); // 修改材质颜色
   cubeEarth = new THREE.Mesh(earth, earthMaterial);
+
+  // const color: any = new THREE.Color(0xff0000);
+  // earthMaterial.map.offset.copy(color);
+  earthMaterial.map.repeat.set(1, 1);
+
   cubeEarth.name = "EARTH";
   // cubeEarth.position.set(100, 20, 20);
   cubeEarth.position.set(-400, 200, -200);
@@ -222,6 +249,8 @@ const toggle = () => {
 };
 
 window.addEventListener("resize", () => {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
   css2dRender.setSize(window.innerWidth, window.innerHeight);
 });
@@ -246,7 +275,12 @@ const onClick = (event: any) => {
 
     //通过点击到该模型用名字匹配
     if (clickedObject.name === clickedObject.name) {
-      console.log(clickedObject.name, "获取的当前模型信息:", clickedObject);
+      // console.log(
+      //   "获取的当前模型信息:",
+      //   clickedObject,
+      //   "-------------场景",
+      //   scene
+      // );
       // clickedObject.material.color.set(0xff0000);
       if (clickedObject.children.length) {
         clickedObject.children[0].element.innerHTML += "点击了";
