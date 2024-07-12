@@ -5,16 +5,16 @@
 <script lang="ts" setup>
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
-import { mergeGeometries } from "three/examples/jsm/utils/BufferGeometryUtils";
+import { mergeBufferGeometries } from "three/examples/jsm/utils/BufferGeometryUtils";
 import TWEEN from "@tweenjs/tween.js";
 import { onMounted, reactive } from "vue";
 
 let renderer: any;
 let earth: any;
 let controls: any;
-const counter = 4;
-const impacts = 0.03;
-const imgData = require("@/assets/earth1.jpg");
+const counter = 100;
+const impacts = 100;
+const imgData = require("@/assets/earth.jpg");
 
 // const ele: any = document.getElementById("ele");
 // renderer = new THREE.WebGLRenderer();
@@ -129,7 +129,7 @@ const initEarth = () => {
   }
   // 将多个网格合并为一个网格
   // console.log(geoms, "------------------geoms");
-  let g = mergeGeometries(geoms);
+  let g = mergeBufferGeometries(geoms);
   let m: any = new THREE.MeshBasicMaterial({
     color: new THREE.Color(params.colors.base),
   });

@@ -2,11 +2,7 @@
 import { watchEffect, ref } from "vue";
 import { OrbitControls } from "@tresjs/cientos";
 import { Fog } from "three";
-import {
-  initCountryPosition,
-  addImgEarth,
-  XRayearth,
-} from "./views/earth/earthUtil";
+import { initCountryPosition, addImgEarth, XRayearth } from "./earth/earthUtil";
 import { TresCanvas } from "@tresjs/core";
 
 const gl = {
@@ -59,9 +55,9 @@ watchEffect(() => {
   height: 100%;
   position: fixed;
   top: 0;
-  left: 0;
   background: url("@/assets/bg-img.png");
   background-size: cover;
+  top: 100px;
   width: 100%;
 
   display: flex;

@@ -36,6 +36,25 @@ const init = () => {
   initFloor();
   initEarth();
   animate();
+  console.log(scene, "------------------scene");
+
+  // 假设你已经有了一个Three.js的场景对象scene
+
+  // function hasLight(scene:any) {
+  //     let hasLight = false;
+  //     scene.traverse((object:any) => {
+  //         if (object.isLight) {
+  //             hasLight = true;
+  //         }
+  //     });
+  //     return hasLight;
+  // }
+
+  // if (hasLight(scene)) {
+  //     console.log('场景有光源');
+  // } else {
+  //     console.log('场景没有光源');
+  // }
 };
 
 const scene = new THREE.Scene();
@@ -58,11 +77,11 @@ camera.position.y = 10;
 const axes = new THREE.AxesHelper(10);
 
 // 环境光
-const light = new THREE.AmbientLight(0xffffff, 1);
-scene.add(light);
+// const light = new THREE.AmbientLight(0xffffff, 1);
+// scene.add(light);
 
 //点光源
-const light1 = new THREE.PointLight(0xffffff, 800);
+const light1 = new THREE.PointLight(0xffffff, 2);
 light1.castShadow = true;
 light1.position.set(5, 18, 20);
 scene.add(light1);
@@ -171,7 +190,7 @@ const initFloor = () => {
 let cubeEarth: any;
 const initEarth = () => {
   //光
-  const light1 = new THREE.DirectionalLight(0x55b1ac, 8);
+  const light1 = new THREE.DirectionalLight(0x55b1ac, 1);
   light1.castShadow = true;
   light1.position.set(-400, 400, -50);
   scene.add(light1);
@@ -190,7 +209,8 @@ const initEarth = () => {
   // });
   const earthMaterial = new THREE.MeshPhongMaterial();
   earthMaterial.map = new THREE.TextureLoader().load(
-    require("@/assets/earth1.jpg")
+    require("@/assets/earthReal.jpg")
+    // require("@/assets/earth.jpg")
   );
   // earthMaterial.color.set(0xff0000); // 修改材质颜色
   cubeEarth = new THREE.Mesh(earth, earthMaterial);
